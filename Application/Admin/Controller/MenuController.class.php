@@ -4,7 +4,6 @@
  */
 namespace Admin\Controller;
 use Think\Controller;
-use Think\Exception;
 
 class MenuController extends CommonController {
     
@@ -29,7 +28,6 @@ class MenuController extends CommonController {
                 //修改操作时，使用
                 return $this->save($_POST);
             }
-            //$menuId = D("Menu")->insert($_POST);
             //返回插入数据表的ID
             $menuId = D("Menu")->insert($_POST);
             if($menuId) {
