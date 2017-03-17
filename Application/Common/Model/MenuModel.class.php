@@ -20,11 +20,11 @@ class MenuModel extends  Model {
     public function getMenus($data,$page,$pageSize=10) {
         //不为删除的数据
         $data['status'] = array('neq',-1);
-        $offset = ($page - 1) * $pageSize;
+        $offset = ($page - 1) * $pageSize;//起始位置
         $list = $this->_db->where($data)->order('listorder desc,menu_id desc')->limit($offset,$pageSize)->select();
         return $list;
     }
-
+    //获取数据总数
     public function getMenusCount($data= array()) {
         $data['status'] = array('neq',-1);
         return $this->_db->where($data)->count();
@@ -71,9 +71,8 @@ class MenuModel extends  Model {
             'listorder' => intval($listorder),
         );
         return $this->_db->where('menu_id='.$id)->save($data);
-        //return $this->_db->where('menu_id='.$id)->save($data);
     }
-
+    //后台菜单
     public function getAdminMenus() {
         $data = array(
             'status' => array('neq',-1),

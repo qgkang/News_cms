@@ -98,7 +98,7 @@ $('#button-listorder').click(function() {
     $(data).each(function(i){
        postData[this.name] = this.value;
     });
-    console.log(data);
+    //console.log(data);
     var url = SCOPE.listorder_url;
     $.post(url,postData,function(result){
         if(result.status == 1) {

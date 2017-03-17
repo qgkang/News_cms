@@ -10,9 +10,10 @@ class AdminModel extends Model {
 	private $_db = '';
 
 	public function __construct() {
+        //实例化admin模型，表示操作admin表;
 		$this->_db = M('admin');
 	}
-   
+   //获取后台登陆用户信息
     public function getAdminByUsername($username='') {
         $res = $this->_db->where('username="'.$username.'"')->find();
         return $res;

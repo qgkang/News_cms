@@ -37,6 +37,7 @@ function getAdminMenuUrl($nav) {
     return $url;
 }
 function getActive($navc){
+    //CONTROLLER_NAME 当前控制器名
     $c = strtolower(CONTROLLER_NAME);
     if(strtolower($navc) == $c) {
         return 'class="active"';
