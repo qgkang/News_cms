@@ -9,9 +9,7 @@ class MenuController extends CommonController {
     
     public function add(){
         if($_POST) {
-            /*if(!isset($_POST['name']) || !$_POST['name']) {
-                return show(0,'菜单名不能为空');
-            }*/
+            //获取表单值
             if(!isset($_POST['name']) || !$_POST['name']){
                 return show(0,'菜单名不能为空!');
             }
@@ -28,7 +26,7 @@ class MenuController extends CommonController {
                 //修改操作时，使用
                 return $this->save($_POST);
             }
-            //返回插入数据表的ID
+            //返回插入数据库的主键ID
             $menuId = D("Menu")->insert($_POST);
             if($menuId) {
                 return show(1,'新增成功',$menuId);
@@ -36,6 +34,7 @@ class MenuController extends CommonController {
             return show(0,'新增失败',$menuId);
 
         }else {
+            //不带任何参数，自动定位到当前操作的模板文件
             $this->display();
         }
         //echo "welcome to singcms";
@@ -43,6 +42,7 @@ class MenuController extends CommonController {
 
     public function index() {
         $data = array();
+        //搜索
         if(isset($_REQUEST['type']) && in_array($_REQUEST['type'], array(0,1))) {
             $data['type'] = intval($_REQUEST['type']);
             //把变量$type分配到前端使用
@@ -74,6 +74,7 @@ class MenuController extends CommonController {
         $this->display();
     }
     public function save($data) {
+        //edit時，保存数据到db
         $menuId = $data['menu_id'];
         unset($data['menu_id']);//释放没有的数据
 

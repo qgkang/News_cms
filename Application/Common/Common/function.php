@@ -5,12 +5,12 @@
  */
 
 function  show($status, $message,$data=array()) {
+    //把数据放到数组里
     $reuslt = array(
         'status' => $status,
         'message' => $message,
         'data' => $data,
     );
-
     exit(json_encode($reuslt));
 }
 function getMd5Password($password) {

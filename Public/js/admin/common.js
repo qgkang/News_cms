@@ -11,11 +11,11 @@ $("#button-add").click(function(){
  * 提交form表单操作
  */
 $("#singcms-button-submit").click(function(){
-    //serializeArray()获取表单的数据
+    //serializeArray()获取表单的数据,返回 JSON 数据结构数据
     //var data = $("#singcms-form").serializeArray();
     var data = $("#singcms-form").serializeArray();
     postData = {};
-    //each循环数据
+    //each遍历json数据
     $(data).each(function(i){
         //data 的值是name/value格式的
        postData[this.name] = this.value;
