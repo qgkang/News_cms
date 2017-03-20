@@ -82,6 +82,7 @@ class MenuModel extends  Model {
         return $this->_db->where($data)->order('listorder desc,menu_id desc')->select();
     }
 
+    //获得前端导航
     public function getBarMenus() {
         $data = array(
             'status' => 1,

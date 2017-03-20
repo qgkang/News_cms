@@ -20,6 +20,7 @@ class UploadImageModel extends Model {
     }
 
     public function upload() {
+        //通过编辑器上传
         $res = $this->_uploadObj->upload();
 
         if($res) {

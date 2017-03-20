@@ -12,7 +12,7 @@ use Think\Exception;
 class ContentController extends CommonController {
 
     public function index() {
-        //conds为contions条件
+        //conds为搜索条件
         $conds = array();
         $title = $_GET['title'];
         if($title) {
@@ -36,7 +36,7 @@ class ContentController extends CommonController {
         $this->assign('pageres',$pageres);
         $this->assign('news',$news);
         $this->assign('positions', $positions);
-
+        //数据分配到前端展示
         $this->assign('webSiteMenu',D("Menu")->getBarMenus());
         $this->display();
     }
@@ -57,12 +57,14 @@ class ContentController extends CommonController {
             if(!isset($_POST['content']) || !$_POST['content']) {
                 return show(0,'content不存在');
             }
+            //保存编辑过的数据
             if($_POST['news_id']) {
                 return $this->save($_POST);
             }
-            //插入news表
+            //插入news表,返回表的ID
             $newsId = D("News")->insert($_POST);
             if($newsId) {
+                //数据插入副表
                 $newsContentData['content'] = $_POST['content'];
                 $newsContentData['news_id'] = $newsId;
                 //插入news_content表
@@ -72,23 +74,22 @@ class ContentController extends CommonController {
                 }else{
                     return show(1,'主表插入成功，副表插入失败');
                 }
-
-
             }else{
                 return show(0,'新增失败');
             }
-
         }else {
 
             //调用MenuModel的getBarMenus方法
             $webSiteMenu = D("Menu")->getBarMenus();
-            //C('参数名')通过C方法获取已有的配置Admin/Conf
+            //C('参数名')通过C方法获取已有的配置Admin/Conf，颜色值
             $titleFontColor = C("TITLE_FONT_COLOR");
             $copyFrom = C("COPY_FROM");
-            //变量分配到前端
+            //变量值传给前端模板
             $this->assign('webSiteMenu', $webSiteMenu);
             $this->assign('titleFontColor', $titleFontColor);
             $this->assign('copyfrom', $copyFrom);
+
+            //不带任何参数，自动定位到当前操作的模板文件
             $this->display();
         }
     }
@@ -99,16 +100,17 @@ class ContentController extends CommonController {
             // 执行跳转
             $this->redirect('/admin.php?c=content');
         }
-        //根据id获取文章的内容
+        //主表内容
         $news = D("News")->find($newsId);
         if(!$news) {
             $this->redirect('/admin.php?c=content');
         }
+        //副表内容
         $newsContent = D("NewsContent")->find($newsId);
         if($newsContent) {
             $news['content'] = $newsContent['content'];
         }
-
+        //获取前端导航
         $webSiteMenu = D("Menu")->getBarMenus();
         $this->assign('webSiteMenu', $webSiteMenu);
         $this->assign('titleFontColor', C("TITLE_FONT_COLOR"));
@@ -123,8 +125,10 @@ class ContentController extends CommonController {
         unset($data['news_id']);
 
         try {
+            //更新主表数据库
             $id = D("News")->updateById($newsId, $data);
             $newsContentData['content'] = $data['content'];
+            //更新副表数据库
             $condId = D("NewsContent")->updateNewsById($newsId, $newsContentData);
             if($id === false || $condId === false) {
                 return show(0, '更新失败');
@@ -157,7 +161,9 @@ class ContentController extends CommonController {
     }
 
     public function listorder() {
+        //获取js传过来的参数
         $listorder = $_POST['listorder'];
+        //跳转url
         $jumpUrl = $_SERVER['HTTP_REFERER'];
         $errors = array();
         try {

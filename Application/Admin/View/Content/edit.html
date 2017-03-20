@@ -101,6 +101,7 @@
                 <input value="{$news.keywords}" type="text" class="form-control" name="keywords" id="inputPassword3" placeholder="请填写关键词">
               </div>
             </div>
+            <!--修改的数据根据ID保存-->
             <input type="hidden" name="news_id" value="{$news.news_id}"/>
 
             <div class="form-group">
@@ -146,6 +147,7 @@
 <script>
   var thumb = "{$news.thumb}";
   if(thumb) {
+    //默认是隐藏
     $("#upload_org_code_img").show();
   }
 </script>

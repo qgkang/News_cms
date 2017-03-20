@@ -18,6 +18,7 @@ class NewsContentModel extends Model {
         }
         $data['create_time'] = time();
         if(isset($data['content']) && $data['content']) {
+            //该数据是编辑器里面编辑的，去掉特殊字符
             $data['content'] = htmlspecialchars($data['content']);
         }
         return $this->_db->add($data);
