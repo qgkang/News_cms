@@ -73,6 +73,7 @@ class PositionModel extends Model {
 	}
 	// 获取正常的推荐位内容
 	public function getNormalPositions() {
+	    //status = 1是正常的内容
 		$conditions = array('status'=>1);
 		$list = $this->_db->where($conditions)->order('id')->select();
 		return $list;

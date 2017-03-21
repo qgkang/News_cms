@@ -27,11 +27,12 @@ class ContentController extends CommonController {
         $pageSize = 10;
 
         $news = D("News")->getNews($conds,$page,$pageSize);
-        //数据总数
+        //获取数据总数
         $count = D("News")->getNewsCount($conds);
 
         $res  =  new \Think\Page($count,$pageSize);
         $pageres = $res->show();
+        //获取正常的推荐位内容
         $positions = D("Position")->getNormalPositions();
         $this->assign('pageres',$pageres);
         $this->assign('news',$news);
@@ -187,7 +188,9 @@ class ContentController extends CommonController {
     }
 
     public function push() {
+        //获得当前页面的前一页面的地址
         $jumpUrl = $_SERVER['HTTP_REFERER'];
+        //来自于post传输的数据
         $positonId = intval($_POST['position_id']);
         $newsId = $_POST['push'];
 

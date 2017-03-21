@@ -99,12 +99,13 @@ class NewsModel extends Model {
         return $this->_db->where('news_id='.$id)->save($data);
     }
     public function getNewsByNewsIdIn($newsIds) {
+        //$newsIds是ID的集合，是数组形式
         if(!is_array($newsIds)) {
             throw_exception("参数不合法");
         }
 
         $data = array(
-
+            //implode()把数组转化为字符串
             'news_id' => array('in',implode(',', $newsIds)),
         );
 

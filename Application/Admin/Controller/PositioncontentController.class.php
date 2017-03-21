@@ -8,8 +8,8 @@ use Think\Exception;
 
 class PositioncontentController extends CommonController {
     public function index(){
+        //获取推荐位里面的内容
         $positions = D("Position")->getNormalPositions();
-        // 获取推荐位里面的内容
         $data['status'] = array('neq', -1);
         if($_GET['title']) {
             $data['title'] = trim($_GET['title']);
@@ -18,6 +18,7 @@ class PositioncontentController extends CommonController {
         $data['position_id'] = $_GET['position_id'] ? intval($_GET['position_id']) : $positions[0]['id'];
         //获取推荐位管理里面的内容
         $contents = D("PositionContent")->select($data);
+
         $this->assign('positions', $positions);
         $this->assign('contents', $contents);
         $this->assign('positionId', $data['position_id']);
@@ -51,6 +52,7 @@ class PositioncontentController extends CommonController {
               return $this->save($_POST);
             }
             try{
+                //数据插入数据库
                 $id = D("PositionContent")->insert($_POST);
                 if($id) {
                     return show(1, '新增成功');
@@ -82,6 +84,7 @@ class PositioncontentController extends CommonController {
 
         try {
             $resId = D("PositionContent")->updateById($id, $data);
+            //做判断
             if($resId === false) {
                 return show(0, '更新失败');
             }
@@ -92,11 +95,11 @@ class PositioncontentController extends CommonController {
     }
 
     public function setStatus() {
-
         $data = array(
             'id' => intval($_POST['id']),
             'status' => intval($_POST['status']),
         );
+        //ctrl+P查看函数参数，公用函数，写在commonController里面
         return parent::setStatus($data, 'PositionContent');
     }
 

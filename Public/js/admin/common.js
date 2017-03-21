@@ -152,6 +152,7 @@ $("#singcms-push").click(function(){
     push = {};
     postData = {};
     $("input[name='pushcheck']:checked").each(function(i){
+        //i是遍历出的元素节点,this代表遍历出的表单元素
         push[i] = $(this).val();
     });
 
@@ -159,7 +160,9 @@ $("#singcms-push").click(function(){
     postData['position_id']  =  id;
     //console.log(postData);return;
     var url = SCOPE.push_url;
+    //把postData数据post给服务器,function是回调函数
     $.post(url, postData, function(result){
+        //result是形参，是控制层返回的json数据
         if(result.status == 1) {
             // TODO
             return dialog.success(result.message,result['data']['jump_url']);

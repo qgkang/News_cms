@@ -72,6 +72,7 @@
 				<input type="radio" name="status" id="optionsRadiosInline1" value="1" <if condition="$vo['status'] eq 1">checked</if>> 开启
 				<input type="radio" name="status" id="optionsRadiosInline2" value="0" <if condition="$vo['status'] eq 0">checked</if>> 关闭
 			  </div>
+				<!--非常重要，不能缺省，用于控制层判断是否是更新数据-->
 			  <input type="hidden" name="id"  value="{$vo.id}"/>
 			</div>
 
