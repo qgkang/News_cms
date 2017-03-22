@@ -9,9 +9,9 @@ use Think\Exception;
 class BasicController extends CommonController {
 
 	public function index() {
+	    //获取缓存数据
 		$result = D("Basic")->select();
-		//把变量分配到前端
-		//$this->assign('vo', $result);
+		//把数据填充到模板
 		$this->assign('vo',$result);
         $this->assign('type',1);
 		$this->display();
@@ -25,14 +25,9 @@ class BasicController extends CommonController {
 			if(!$_POST['keywords']) {
 				return show(0, '站点关键词');
 			}
-			/*if(!$_POST['description']) {
-				return show(0, '站点描述');
-			}*/
 			if(!$_POST['description']){
 			    return show(0,'sit description');
             }
-
-			//D("Basic")->save($_POST);
             D("Basic")->save($_POST);
 			return show(1, '配置成功');
 		}else {
